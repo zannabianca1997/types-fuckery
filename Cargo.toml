@@ -3,4 +3,9 @@ name = "types-fuckery"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
+[profile.release]
+panic = "abort"
+lto = true
+opt-level = "s"
+strip = true
+codegen-units = 1

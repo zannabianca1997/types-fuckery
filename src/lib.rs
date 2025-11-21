@@ -1,3 +1,5 @@
+#![no_std]
+
 pub mod list;
 
 pub mod value;
@@ -9,8 +11,25 @@ pub mod instruction;
 #[macro_export]
 macro_rules! types_fuckery {
     (
-        [ $($instr:tt)*    ]
-        [ $($input:ident)* ]
+        input:   { $($input:literal)* },
+        program: { $($instr:tt)*    } $(,)?
+    ) => {
+        $crate::types_fuckery! {
+            program: { $($instr)* },
+            input:   { $($input)* }
+        }
+    };
+    (
+        program: { $($instr:tt)*    } $(,)?
+    ) => {
+        $crate::types_fuckery! {
+            program: { $($instr)* },
+            input:   {  }
+        }
+    };
+    (
+        program: { $($instr:tt)*    },
+        input:   { $($input:literal)* } $(,)?
     ) => {
         <
             <
@@ -22,10 +41,10 @@ macro_rules! types_fuckery {
                 as $crate::instruction::Instruction<
                     $crate::tape::Tape<
                         $crate::list::Nil,
-                        $crate::value::V00,
+                        $crate::value::V<0>,
                         $crate::list::Nil,
                         $crate::types_fuckery! {
-                            @cons_list [ $( $crate::value::$input ),* ]
+                            @cons_list [ $( $crate::value::V<$input> ),* ]
                         },
                         $crate::list::Nil
                     >

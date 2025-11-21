@@ -1,7 +1,7 @@
 use crate::{
     list::{Cons, Nil},
     tape::{GoLeft, GoRight, Tape},
-    value::{IsNotZero, V00, Value},
+    value::{IsNotZero, V, Value},
 };
 
 pub trait Instruction<Tape> {
@@ -68,10 +68,10 @@ where
 
 pub struct Loop<Body>(Body);
 
-impl<Before, After, Body, Input, Output> Instruction<Tape<Before, V00, After, Input, Output>>
+impl<Before, After, Body, Input, Output> Instruction<Tape<Before, V<0>, After, Input, Output>>
     for Loop<Body>
 {
-    type Output = Tape<Before, V00, After, Input, Output>;
+    type Output = Tape<Before, V<0>, After, Input, Output>;
 }
 impl<Before, This, After, Body, Input, Output> Instruction<Tape<Before, This, After, Input, Output>>
     for Loop<Body>
