@@ -2,10 +2,5 @@
 name = "types-fuckery"
 version = "0.1.0"
 edition = "2024"
-
-[profile.release]
-panic = "abort"
-lto = true
-opt-level = "s"
-strip = true
-codegen-units = 1
+license = "MIT"
+authors = ["zannabianca1997 <zannabianca199712@gmail.com>"]
